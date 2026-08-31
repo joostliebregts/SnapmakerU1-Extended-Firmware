@@ -12,7 +12,7 @@ jobs:
       contents: write
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       with:
         fetch-depth: 0
         submodules: recursive
@@ -22,14 +22,14 @@ jobs:
 
     - name: Restore Firmwares Cache
       id: cache-firmwares
-      uses: actions/cache/restore@v4
+      uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
       with:
         path: firmware/
         key: firmwares-${{ runner.os }}-${{ runner.arch }}-${{ env.FIRMWARE_VERSION }}
 
     - name: Restore Kernel Cache
       id: cache-kernel
-      uses: actions/cache/restore@v4
+      uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
       with:
         path: tmp/kernel/
         key: kernels-${{ runner.os }}-${{ runner.arch }}-${{ env.KERNEL_SHA }}
@@ -57,7 +57,7 @@ jobs:
       run: make changelog >> RELEASE.md
 
     - name: 'Release debian files'
-      uses: ncipollo/release-action@v1
+      uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd # v1
       with:
         tag: "v${{ env.GIT_VERSION }}"
         allowUpdates: false
@@ -68,14 +68,14 @@ jobs:
 
     - name: Save Firmwares Cache
       if: steps.cache-firmwares.outputs.cache-hit != 'true'
-      uses: actions/cache/save@v4
+      uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
       with:
         path: firmware/
         key: firmwares-${{ runner.os }}-${{ runner.arch }}-${{ env.FIRMWARE_VERSION }}
 
     - name: Save Kernel Cache
       if: steps.cache-kernel.outputs.cache-hit != 'true'
-      uses: actions/cache/save@v4
+      uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
       with:
         path: tmp/kernel/
         key: kernels-${{ runner.os }}-${{ runner.arch }}-${{ env.KERNEL_SHA }}
